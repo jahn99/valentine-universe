@@ -156,15 +156,27 @@ Enter Memory Lane 💗
 
 <div id="memory">
 
-<h1>Our Memory Lane 💕</h1>
+<h1 style="text-align:center;">
+Our Memory Universe 💕
+</h1>
 
-<img src="images/memory_1.jpeg">
-<img src="images/memory_2.jpeg">
-<img src="images/memory_3.jpeg">
+<div id="universe"></div>
 
 <br><br>
 
-<button onclick="goBack()">Back</button>
+<div style="text-align:center;">
+<button onclick="goBack()">Return to Universe</button>
+</div>
+
+</div>
+
+
+<h1>Our Memory Lane 💕</h1>
+<div id="universe"></div>
+
+<br><br>
+
+<button onclick="goBack()">Return to universe 💫<</button>
 
 </div>
 
@@ -172,88 +184,76 @@ Enter Memory Lane 💗
 
 <script>
 
-/* LOGIN */
+var correctPassword = "love";
 
-function login(){
+function enterUniverse(){
 
-var pass =
-document.getElementById("password").value;
+var entered = document.getElementById("passwordInput").value;
 
-if(pass==="iloveyou"){
+if(entered === correctPassword){
 
-document.getElementById("login").style.display="none";
-
-document.getElementById("main").style.display="block";
-
-startLove();
+document.getElementById("login").style.display = "none";
+document.getElementById("main").style.display = "block";
 
 }
 else{
-
-document.getElementById("msg").innerText="Wrong password";
-
+alert("Wrong password");
 }
 
 }
 
-
-/* LOVE METER */
-
-function startLove(){
-
-var percent=0;
-
-setInterval(function(){
-
-if(percent<100){
-
-percent++;
-
-document.getElementById("loveFill").style.width=percent+"%";
-
-document.getElementById("loveText").innerText=
-"Love Energy: "+percent+"%";
-
-}
-
-},50);
-
-
-/* TIME COUNTER */
-
-var start=new Date("2024-01-01");
-
-setInterval(function(){
-
-var now=new Date();
-
-var diff=now-start;
-
-var days=Math.floor(diff/(1000*60*60*24));
-
-document.getElementById("timeText").innerText=
-"Time since I fell for you: "+days+" days 💗";
-
-},1000);
-
-}
-
-
-/* MEMORY */
 
 function openMemory(){
 
-document.getElementById("main").style.display="none";
+document.getElementById("main").style.display = "none";
+document.getElementById("memory").style.display = "block";
 
-document.getElementById("memory").style.display="block";
+loadMemories();
 
 }
 
+
 function goBack(){
 
-document.getElementById("memory").style.display="none";
+document.getElementById("memory").style.display = "none";
+document.getElementById("main").style.display = "block";
 
-document.getElementById("main").style.display="block";
+}
+
+
+function loadMemories(){
+
+var universe = document.getElementById("universe");
+
+universe.innerHTML = "";
+
+for(let i=1;i<=32;i++){
+
+var star = document.createElement("div");
+
+star.style.position = "absolute";
+star.style.left = Math.random()*90 + "%";
+star.style.top = Math.random()*2000 + "px";
+star.style.textAlign = "center";
+
+var img = document.createElement("img");
+img.src = "images/memory_" + i + ".jpeg";
+
+img.style.width = "220px";
+img.style.borderRadius = "20px";
+img.style.boxShadow = "0 0 20px hotpink";
+
+var caption = document.createElement("div");
+caption.innerHTML = "Memory " + i + " 💕";
+caption.style.color = "white";
+caption.style.marginTop = "10px";
+
+star.appendChild(img);
+star.appendChild(caption);
+
+universe.appendChild(star);
+
+}
 
 }
 
