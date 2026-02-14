@@ -1,3 +1,31 @@
+
+// PASSWORD FIX
+
+function checkPassword(){
+
+const password =
+document.getElementById("passwordInput").value;
+
+if(password==="iloveyou"){
+
+document.getElementById("lockScreen").style.display="none";
+
+const universe =
+document.getElementById("universe");
+
+universe.style.display="flex";
+
+}
+else{
+
+document.getElementById("errorMessage").innerText =
+"Wrong password";
+
+}
+
+}
+
+
 // MEMORY DATA
 
 const memories=[];
@@ -14,7 +42,7 @@ text:`Memory ${i} 💕`
 }
 
 
-// OPEN MEMORY LANE
+// OPEN MEMORY
 
 function openMemoryLane(){
 
@@ -27,7 +55,7 @@ createTimeline();
 }
 
 
-// CLOSE MEMORY LANE
+// CLOSE MEMORY
 
 function closeMemoryLane(){
 
@@ -42,18 +70,17 @@ document.getElementById("universe").style.display="flex";
 
 function createTimeline(){
 
-const container=
+const container =
 document.getElementById("memory-container");
 
 container.innerHTML="";
 
 memories.forEach((memory,index)=>{
 
-const card=document.createElement("div");
+const card =
+document.createElement("div");
 
-card.className=
-"memory-card "+
-(index%2===0?"left":"right");
+card.className="memory-card";
 
 card.innerHTML=
 `
