@@ -1,21 +1,3 @@
-// PASSWORD
-
-function checkPassword(){
-
-const password =
-document.getElementById("passwordInput").value;
-
-if(password==="iloveyou"){
-
-document.getElementById("lockScreen").style.display="none";
-
-document.getElementById("universe").style.display="block";
-
-}
-
-}
-
-
 // MEMORY DATA
 
 const memories=[];
@@ -38,30 +20,9 @@ function openMemoryLane(){
 
 document.getElementById("universe").style.display="none";
 
-const lane =
-document.getElementById("memory-lane");
+document.getElementById("memory-lane").style.display="block";
 
-lane.style.display="block";
-
-const container =
-document.getElementById("memory-container");
-
-container.innerHTML="";
-
-memories.forEach(memory=>{
-
-const card=document.createElement("div");
-
-card.className="memory-card";
-
-card.innerHTML=`
-<img src="${memory.image}">
-<p>${memory.text}</p>
-`;
-
-container.appendChild(card);
-
-});
+createTimeline();
 
 }
 
@@ -72,24 +33,36 @@ function closeMemoryLane(){
 
 document.getElementById("memory-lane").style.display="none";
 
-document.getElementById("universe").style.display="block";
+document.getElementById("universe").style.display="flex";
 
 }
 
 
-// TIMER
+// CREATE TIMELINE
 
-const startDate=new Date("2024-01-01");
+function createTimeline(){
 
-setInterval(()=>{
+const container=
+document.getElementById("memory-container");
 
-const now=new Date();
+container.innerHTML="";
 
-const diff=now-startDate;
+memories.forEach((memory,index)=>{
 
-const days=Math.floor(diff/(1000*60*60*24));
+const card=document.createElement("div");
 
-document.getElementById("time-counter").innerText=
-days+" days since I fell for you 💕";
+card.className=
+"memory-card "+
+(index%2===0?"left":"right");
 
-},1000);
+card.innerHTML=
+`
+<img src="${memory.image}">
+<p>${memory.text}</p>
+`;
+
+container.appendChild(card);
+
+});
+
+}
