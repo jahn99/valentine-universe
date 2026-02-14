@@ -1,5 +1,5 @@
 
-// PASSWORD FIX
+// PASSWORD
 
 function checkPassword(){
 
@@ -10,15 +10,13 @@ if(password==="iloveyou"){
 
 document.getElementById("lockScreen").style.display="none";
 
-const universe =
-document.getElementById("universe");
-
-universe.style.display="flex";
+document.getElementById("universe").style.display="flex";
 
 }
+
 else{
 
-document.getElementById("errorMessage").innerText =
+document.getElementById("errorMessage").innerText=
 "Wrong password";
 
 }
@@ -34,8 +32,7 @@ for(let i=1;i<=32;i++){
 
 memories.push({
 
-image:`images/memory_${i}.jpeg`,
-text:`Memory ${i} 💕`
+image:`images/memory_${i}.jpeg`
 
 });
 
@@ -48,7 +45,10 @@ function openMemoryLane(){
 
 document.getElementById("universe").style.display="none";
 
-document.getElementById("memory-lane").style.display="block";
+const lane =
+document.getElementById("memory-lane");
+
+lane.style.display="block";
 
 createTimeline();
 
@@ -80,13 +80,12 @@ memories.forEach((memory,index)=>{
 const card =
 document.createElement("div");
 
-card.className="memory-card";
+card.className =
+"memory-card "+
+(index%2===0?"left":"right");
 
-card.innerHTML=
-`
-<img src="${memory.image}">
-<p>${memory.text}</p>
-`;
+card.innerHTML =
+`<img src="${memory.image}">`;
 
 container.appendChild(card);
 
