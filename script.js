@@ -1,291 +1,150 @@
-// ==========================
-// GLOBAL VARIABLES
-// ==========================
+let progress=0;
+const startDate=new Date("2024-01-01");
 
-let progress = 0;
-
-// change this date to your actual anniversary if you want
-const startDate = new Date("2024-01-01");
-
-
-// ==========================
-// RUN AFTER PAGE LOAD
-// ==========================
-
-window.onload = function () {
-
-    // ensure final letter is hidden at start
-    const finalLetter = document.getElementById("final-letter");
-    if (finalLetter) {
-        finalLetter.style.display = "none";
-    }
-
-    startStars();
-    startCounter();
+window.onload=function(){
+startStars();
+startCounter();
+document.getElementById("final-letter").style.display="none";
 };
 
-
-// ==========================
-// PASSWORD SYSTEM
-// ==========================
-
-function checkPassword() {
-
-    const password = document.getElementById("passwordInput").value;
-
-    if (password === "iloveyou") {
-
-        document.getElementById("lockScreen").style.display = "none";
-        document.getElementById("universe").style.display = "block";
-
-    }
-    else {
-
-        document.getElementById("errorMessage").innerText =
-            "Wrong password";
-
-    }
+// PASSWORD
+function checkPassword(){
+if(document.getElementById("passwordInput").value==="iloveyou"){
+document.getElementById("lockScreen").style.display="none";
+document.getElementById("universe").style.display="block";
+}
 }
 
+// STARS
+function startStars(){
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-// ==========================
-// STAR BACKGROUND
-// ==========================
-
-function startStars() {
-
-    const canvas = document.getElementById("stars");
-
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    let stars = [];
-
-    for (let i = 0; i < 200; i++) {
-
-        stars.push({
-
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            radius: Math.random() * 1.5,
-            speed: Math.random() * 0.5
-
-        });
-
-    }
-
-    function drawStars() {
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        ctx.fillStyle = "#ff99cc";
-
-        stars.forEach(star => {
-
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-            ctx.fill();
-
-            star.y += star.speed;
-
-            if (star.y > canvas.height) {
-                star.y = 0;
-            }
-
-        });
-
-        requestAnimationFrame(drawStars);
-
-    }
-
-    drawStars();
+let stars=[];
+for(let i=0;i<200;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*1.5,
+s:Math.random()*0.5
+});
 }
 
-
-// ==========================
-// LOVE PROGRESS SYSTEM
-// ==========================
-
-function increaseProgress(amount) {
-
-    progress += amount;
-
-    if (progress > 100) progress = 100;
-
-    const bar = document.getElementById("progress-bar");
-    const text = document.getElementById("progress-text");
-
-    if (bar) bar.style.width = progress + "%";
-    if (text) text.innerText = "Love Energy: " + progress + "%";
-
-    // ONLY SHOW FINAL LETTER AT EXACTLY 100%
-    if (progress === 100) {
-
-        const finalLetter =
-            document.getElementById("final-letter");
-
-        if (finalLetter) {
-
-            finalLetter.style.display = "flex";
-
-        }
-
-    }
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#ff99cc";
+stars.forEach(star=>{
+ctx.beginPath();
+ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
+ctx.fill();
+star.y+=star.s;
+if(star.y>canvas.height)star.y=0;
+});
+requestAnimationFrame(draw);
+}
+draw();
 }
 
+// PROGRESS
+function increaseProgress(amount){
+progress+=amount;
+if(progress>100)progress=100;
+document.getElementById("progress-bar").style.width=progress+"%";
+document.getElementById("progress-text").innerText="Love Energy: "+progress+"%";
+if(progress===100){
+document.getElementById("final-letter").style.display="flex";
+}
+}
 
-// ==========================
-// FLOATING HEARTS SYSTEM
-// ==========================
-
-const messages = [
-
-    "You are my forever 💕",
-    "You are my safe place 💗",
-    "I love you endlessly 💖",
-    "You complete my universe 💞",
-    "I choose you in every lifetime 💘",
-    "You are my home 💓"
-
+// HEARTS
+const messages=[
+"You are my forever 💕",
+"You are my safe place 💗",
+"I love you endlessly 💖",
+"You complete my universe 💞",
+"I choose you always 💘"
 ];
 
-function createHeart() {
+function createHeart(){
+const container=document.getElementById("heart-container");
+if(!container)return;
+const heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💗";
+heart.style.left=Math.random()*100+"vw";
+let duration=Math.random()*5+5;
+heart.style.animationDuration=duration+"s";
+heart.onclick=function(){
+showMessage();
+increaseProgress(10);
+heart.remove();
+};
+container.appendChild(heart);
+setTimeout(()=>heart.remove(),duration*1000);
+}
+setInterval(createHeart,1500);
 
-    const container =
-        document.getElementById("heart-container");
-
-    if (!container) return;
-
-    const heart = document.createElement("div");
-
-    heart.className = "heart";
-
-    heart.innerHTML = "💗";
-
-    heart.style.left =
-        Math.random() * 100 + "vw";
-
-    const duration =
-        Math.random() * 5 + 5;
-
-    heart.style.animationDuration =
-        duration + "s";
-
-    heart.onclick = function () {
-
-        showMessage();
-
-        increaseProgress(10);
-
-        heart.remove();
-
-    };
-
-    container.appendChild(heart);
-
-    setTimeout(() => {
-
-        heart.remove();
-
-    }, duration * 1000);
-
+// MESSAGE
+function showMessage(){
+let msg=messages[Math.floor(Math.random()*messages.length)];
+document.getElementById("love-message").innerText=msg;
+document.getElementById("message-popup").style.display="flex";
+}
+function closeMessage(){
+document.getElementById("message-popup").style.display="none";
 }
 
-// create hearts continuously
-setInterval(createHeart, 1500);
-
-
-// ==========================
-// MESSAGE POPUP
-// ==========================
-
-function showMessage() {
-
-    const popup =
-        document.getElementById("message-popup");
-
-    const text =
-        document.getElementById("love-message");
-
-    if (!popup || !text) return;
-
-    const msg =
-        messages[Math.floor(Math.random() * messages.length)];
-
-    text.innerText = msg;
-
-    popup.style.display = "flex";
-
+// COUNTER
+function startCounter(){
+setInterval(()=>{
+let now=new Date();
+let diff=now-startDate;
+let days=Math.floor(diff/(1000*60*60*24));
+document.getElementById("time-counter").innerText=days+" days";
+},1000);
 }
 
-function closeMessage() {
-
-    const popup =
-        document.getElementById("message-popup");
-
-    if (popup)
-        popup.style.display = "none";
-
-}
-
-
-// ==========================
-// TIME COUNTER
-// ==========================
-
-function startCounter() {
-
-    setInterval(() => {
-
-        const now = new Date();
-
-        const diff = now - startDate;
-
-        const days =
-            Math.floor(diff / (1000 * 60 * 60 * 24));
-
-        const counter =
-            document.getElementById("time-counter");
-
-        if (counter)
-            counter.innerText =
-                days + " days";
-
-    }, 1000);
-
-}
-
-
-// ==========================
-// REASON GENERATOR
-// ==========================
-
-const reasons = [
-
-    "You make me smile every day 💕",
-    "You understand me 💗",
-    "You make my world brighter 💖",
-    "You are my happiness 💞",
-    "You are my forever 💘"
-
+// REASONS
+const reasons=[
+"You make me smile 💕",
+"You are my home 💗",
+"You are my universe 💖",
+"You are my forever 💞",
+"You are my heart 💘"
 ];
 
-function generateReason() {
+function generateReason(){
+let reason=reasons[Math.floor(Math.random()*reasons.length)];
+document.getElementById("reason-output").innerText=reason;
+increaseProgress(5);
+}
 
-    const output =
-        document.getElementById("reason-output");
+// MEMORY DATA (EDIT CAPTIONS)
+const memories=[];
+for(let i=1;i<=32;i++){
+memories.push({
+image:`images/memory_${i}.jpeg`,
+text:`Your caption for memory ${i} 💕`
+});
+}
 
-    if (!output) return;
+function openMemoryLane(){
+document.getElementById("memory-lane").style.display="block";
+const container=document.getElementById("memory-container");
+container.innerHTML="";
+memories.forEach(memory=>{
+const card=document.createElement("div");
+card.className="memory-card";
+card.innerHTML=`
+<img src="${memory.image}">
+<p>${memory.text}</p>
+`;
+container.appendChild(card);
+});
+}
 
-    const reason =
-        reasons[Math.floor(Math.random() * reasons.length)];
-
-    output.innerText = reason;
-
-    increaseProgress(5);
-
+function closeMemoryLane(){
+document.getElementById("memory-lane").style.display="none";
 }
