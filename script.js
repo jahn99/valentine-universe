@@ -8,60 +8,38 @@ document.getElementById("passwordInput").value;
 
 if(password==="iloveyou"){
 
-document.getElementById("lockScreen").style.display="none";
+document.getElementById("lockScreen").classList.add("hidden");
 
-document.getElementById("universe").style.display="flex";
+document.getElementById("universe").classList.remove("hidden");
 
 }
-
 else{
-
-document.getElementById("errorMessage").innerText=
-"Wrong password";
-
+document.getElementById("error").innerText="Wrong password";
 }
 
 }
 
 
-// MEMORY DATA
-
-const memories=[];
-
-for(let i=1;i<=32;i++){
-
-memories.push({
-
-image:`images/memory_${i}.jpeg`
-
-});
-
-}
-
-
-// OPEN MEMORY
+// OPEN MEMORY LANE
 
 function openMemoryLane(){
 
-document.getElementById("universe").style.display="none";
+document.getElementById("universe").classList.add("hidden");
 
-const lane =
-document.getElementById("memory-lane");
-
-lane.style.display="block";
+document.getElementById("memoryLane").classList.remove("hidden");
 
 createTimeline();
 
 }
 
 
-// CLOSE MEMORY
+// CLOSE MEMORY LANE
 
 function closeMemoryLane(){
 
-document.getElementById("memory-lane").style.display="none";
+document.getElementById("memoryLane").classList.add("hidden");
 
-document.getElementById("universe").style.display="flex";
+document.getElementById("universe").classList.remove("hidden");
 
 }
 
@@ -70,25 +48,20 @@ document.getElementById("universe").style.display="flex";
 
 function createTimeline(){
 
-const container =
-document.getElementById("memory-container");
+const container=document.getElementById("timeline");
 
 container.innerHTML="";
 
-memories.forEach((memory,index)=>{
+for(let i=1;i<=32;i++){
 
-const card =
-document.createElement("div");
+const div=document.createElement("div");
 
-card.className =
-"memory-card "+
-(index%2===0?"left":"right");
+div.className="memory " + (i%2==0?"right":"left");
 
-card.innerHTML =
-`<img src="${memory.image}">`;
+div.innerHTML=`<img src="images/memory_${i}.jpeg">`;
 
-container.appendChild(card);
+container.appendChild(div);
 
-});
+}
 
 }
