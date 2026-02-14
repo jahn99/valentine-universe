@@ -235,7 +235,7 @@ white-space:pre-line;
 <h1>My Dear Ammu ,Loving you changed my universe 💕</h1>
 
 <!-- ADDED gravitational center -->
-<div id="gravityCenter">Ammu is the center of my universe 🪐</div>
+<div id="gravityCenter">JAHNMAN 🪐</div>
 
 <div id="heartbeatHeart">❤️</div>
 
@@ -246,6 +246,29 @@ white-space:pre-line;
 <p>Love Energy: 100%</p>
 
 <p id="time"></p>
+<br>
+
+<div id="emotionalStatus" style="
+background:rgba(255,0,150,0.08);
+border:1px solid rgba(255,0,150,0.3);
+border-radius:15px;
+padding:15px;
+max-width:400px;
+margin:20px auto;
+color:#ffb3d9;
+box-shadow:0 0 15px rgba(255,0,150,0.2);
+">
+
+<div>Thoughts about Ammu today: <span id="thoughtCount">0</span></div>
+
+<div>Times I stopped loving you: 0</div>
+
+<div>Universe stability: 100%</div>
+
+<div>Heart ownership: Ammu ❤️</div>
+
+</div>
+
 
 <button onclick="openMemory()">Enter Memory Lane 💕</button>
 
@@ -406,6 +429,26 @@ document.getElementById("fill").style.width="100%";
 document.getElementById("bgMusic").play();
 }else alert("Wrong password 💔");
 }
+/* PERSONAL EMOTIONAL STATUS SYSTEM */
+
+var thoughtCount = 0;
+
+function increaseThoughts(){
+
+// increases slowly forever
+thoughtCount += 1;
+
+
+document.getElementById("thoughtCount").innerText = thoughtCount;
+
+}
+
+// increase every 3 seconds
+setInterval(increaseThoughts, 3000);
+
+// initialize
+increaseThoughts();
+
 
 </script>
 
