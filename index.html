@@ -271,24 +271,6 @@ document.getElementById("timeline");
 
 timeline.innerHTML="";
 
-for(let i=1;i<=32;i++){
-
-var card =
-document.createElement("div");
-
-card.className="memoryCard";
-
-card.innerHTML=
-`
-<img src="images/memory_${i}.jpeg">
-<div class="caption">
-${captions[i-1]}
-</div>
-`;
-
-timeline.appendChild(card);
-
-}
 
 
 var captions = [
@@ -327,6 +309,25 @@ var captions = [
 "When ammu is wearing his jersey 💕"
 
 ];
+for(let i=1;i<=32;i++){
+
+var card =
+document.createElement("div");
+
+card.className="memoryCard";
+
+card.innerHTML=
+`
+<img src="images/memory_${i}.jpeg">
+<div class="caption">
+${captions[i-1]}
+</div>
+`;
+
+timeline.appendChild(card);
+
+}
+
 
 }
 
