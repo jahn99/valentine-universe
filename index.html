@@ -135,10 +135,73 @@ color:#ffb3d9;
 text-align:center;
 }
 
+/* STAR BACKGROUND */
+
+.stars{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:-1;
+overflow:hidden;
+}
+
+.star{
+position:absolute;
+width:3px;
+height:3px;
+background:white;
+border-radius:50%;
+animation: twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+from{opacity:0.2;}
+to{opacity:1;}
+}
+
+
+/* LOVE LETTER */
+
+#loveLetter{
+margin-top:20px;
+font-size:18px;
+color:#ffb3d9;
+max-width:400px;
+margin-left:auto;
+margin-right:auto;
+min-height:50px;
+}
+
+
+/* HEART PARTICLES */
+
+.heart{
+position:fixed;
+color:#ff4da6;
+animation: floatUp 2s linear forwards;
+pointer-events:none;
+}
+
+@keyframes floatUp{
+from{
+transform:translateY(0);
+opacity:1;
+}
+to{
+transform:translateY(-100px);
+opacity:0;
+}
+}
+
 </style>
 
 </head>
 <body>
+
+    <div class="stars" id="stars"></div>
+
 
 <!-- PASSWORD SCREEN -->
 
@@ -182,6 +245,13 @@ text-align:center;
 
 <!-- MEMORY LANE -->
 
+<br><br>
+
+<button onclick="generateLove()">Why I love you 💕</button>
+
+<div id="loveLetter"></div>
+
+
 <div id="memory">
 
 <h1>Our Memory Lane 💕</h1>
@@ -194,6 +264,165 @@ text-align:center;
 
 
 <script>
+    
+/* CREATE STARS */
+
+function createStars(){
+
+const starsContainer =
+document.getElementById("stars");
+
+for(let i=0;i<120;i++){
+
+let star =
+document.createElement("div");
+
+star.className="star";
+
+star.style.top =
+Math.random()*100+"%";
+
+star.style.left =
+Math.random()*100+"%";
+
+star.style.animationDuration =
+(1+Math.random()*3)+"s";
+
+starsContainer.appendChild(star);
+
+}
+
+}
+
+createStars();
+
+
+
+/* LOVE TIMER LIVE UPDATE */
+
+var startDate =
+new Date("December 1, 2024 00:00:00");
+
+function updateTime(){
+
+var now = new Date();
+
+var diff = now - startDate;
+
+var days =
+Math.floor(diff/(1000*60*60*24));
+
+var hours =
+Math.floor((diff/(1000*60*60))%24);
+
+var minutes =
+Math.floor((diff/(1000*60))%60);
+
+var seconds =
+Math.floor((diff/1000)%60);
+
+document.getElementById("time").innerText =
+"Time since I fell for you: "
++days+" days "
++hours+" hrs "
++minutes+" mins "
++seconds+" secs 💕";
+
+}
+
+setInterval(updateTime,1000);
+
+updateTime();
+
+
+
+/* LOVE MESSAGE GENERATOR */
+
+var loveMessages = [
+
+"You make my universe exist 💕",
+"You are my safest place",
+"I love your stupid jokes",
+"I love how you look at me",
+"I love annoying you",
+"I love being yours",
+"I love your voice",
+"I love your hugs",
+"I love your existence",
+"I love everything about you"
+
+];
+
+function generateLove(){
+
+var message =
+loveMessages[
+Math.floor(
+Math.random()*loveMessages.length
+)
+];
+
+typeLetter(message);
+
+}
+
+
+
+/* TYPEWRITER EFFECT */
+
+function typeLetter(text){
+
+var element =
+document.getElementById("loveLetter");
+
+element.innerHTML="";
+
+let i=0;
+
+let interval =
+setInterval(function(){
+
+if(i<text.length){
+
+element.innerHTML += text[i];
+i++;
+
+}
+else{
+clearInterval(interval);
+}
+
+},40);
+
+}
+
+
+
+/* HEART PARTICLES */
+
+document.addEventListener("click",function(e){
+
+let heart =
+document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="💗";
+
+heart.style.left =
+e.clientX+"px";
+
+heart.style.top =
+e.clientY+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+heart.remove();
+},2000);
+
+});
+
 
 /* PASSWORD */
 
