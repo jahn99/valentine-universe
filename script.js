@@ -1,21 +1,8 @@
-let progress=0;
-
-const startDate=new Date("2024-01-01");
-
-window.onload=function(){
-
-startStars();
-
-startCounter();
-
-};
-
-
 // PASSWORD
 
 function checkPassword(){
 
-const password=
+const password =
 document.getElementById("passwordInput").value;
 
 if(password==="iloveyou"){
@@ -29,64 +16,7 @@ document.getElementById("universe").style.display="block";
 }
 
 
-// STARS
-
-function startStars(){
-
-const canvas=document.getElementById("stars");
-
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-
-canvas.height=window.innerHeight;
-
-let stars=[];
-
-for(let i=0;i<200;i++){
-
-stars.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*1.5,
-s:Math.random()*0.5
-
-});
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height);
-
-ctx.fillStyle="#ff99cc";
-
-stars.forEach(star=>{
-
-ctx.beginPath();
-
-ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
-
-ctx.fill();
-
-star.y+=star.s;
-
-if(star.y>canvas.height)
-star.y=0;
-
-});
-
-requestAnimationFrame(draw);
-
-}
-
-draw();
-
-}
-
-
-// MEMORY LANE SYSTEM
+// MEMORY DATA
 
 const memories=[];
 
@@ -102,11 +32,19 @@ text:`Memory ${i} 💕`
 }
 
 
+// OPEN MEMORY LANE
+
 function openMemoryLane(){
 
-document.getElementById("memory-lane").style.display="flex";
+document.getElementById("universe").style.display="none";
 
-const container=document.getElementById("memory-container");
+const lane =
+document.getElementById("memory-lane");
+
+lane.style.display="block";
+
+const container =
+document.getElementById("memory-container");
 
 container.innerHTML="";
 
@@ -116,9 +54,10 @@ const card=document.createElement("div");
 
 card.className="memory-card";
 
-card.innerHTML=
-`<img src="${memory.image}">
-<p>${memory.text}</p>`;
+card.innerHTML=`
+<img src="${memory.image}">
+<p>${memory.text}</p>
+`;
 
 container.appendChild(card);
 
@@ -127,28 +66,30 @@ container.appendChild(card);
 }
 
 
+// CLOSE MEMORY LANE
+
 function closeMemoryLane(){
 
 document.getElementById("memory-lane").style.display="none";
 
+document.getElementById("universe").style.display="block";
+
 }
 
 
-// COUNTER
+// TIMER
 
-function startCounter(){
+const startDate=new Date("2024-01-01");
 
 setInterval(()=>{
 
-let now=new Date();
+const now=new Date();
 
-let diff=now-startDate;
+const diff=now-startDate;
 
-let days=Math.floor(diff/(1000*60*60*24));
+const days=Math.floor(diff/(1000*60*60*24));
 
 document.getElementById("time-counter").innerText=
-days+" days";
+days+" days since I fell for you 💕";
 
 },1000);
-
-}
