@@ -151,7 +151,6 @@ height:3px;
 background:white;
 border-radius:50%;
 animation: twinkle 2s infinite alternate;
-transition:transform 0.3s linear;
 }
 
 @keyframes twinkle{
@@ -167,18 +166,6 @@ max-width:400px;
 margin-left:auto;
 margin-right:auto;
 min-height:50px;
-}
-
-.heart{
-position:fixed;
-color:#ff4da6;
-animation: floatUp 2s linear forwards;
-pointer-events:none;
-}
-
-@keyframes floatUp{
-from{transform:translateY(0);opacity:1;}
-to{transform:translateY(-100px);opacity:0;}
 }
 
 #heartbeatHeart{
@@ -206,6 +193,37 @@ font-size:18px;
 line-height:1.6;
 color:#ffb3d9;
 white-space:pre-line;
+}
+
+/* SCOREBOARD */
+
+#scoreboard{
+background:rgba(255,0,150,0.08);
+border:1px solid rgba(255,0,150,0.3);
+border-radius:20px;
+padding:20px;
+max-width:420px;
+margin:25px auto;
+box-shadow:0 0 20px rgba(255,0,150,0.4);
+text-align:left;
+}
+
+#scoreboard h2{
+text-align:center;
+color:#ff4da6;
+}
+
+.scoreRow{
+display:flex;
+justify-content:space-between;
+padding:6px 0;
+}
+
+.scoreResult{
+margin-top:15px;
+text-align:center;
+color:#ffb3d9;
+font-weight:bold;
 }
 
 </style>
@@ -241,145 +259,118 @@ white-space:pre-line;
 <div class="fill" id="fill"></div>
 </div>
 
-<p>Love Energy: 100%</p>
-
 <p id="time"></p>
 
-<br>
-
-<div id="emotionalStatus" style="
-background:rgba(255,0,150,0.08);
-border:1px solid rgba(255,0,150,0.3);
-border-radius:15px;
-padding:15px;
-max-width:400px;
-margin:20px auto;
-color:#ffb3d9;
-box-shadow:0 0 15px rgba(255,0,150,0.2);
-">
-
-<div>Thoughts about Ammu today: <span id="thoughtCount">0</span></div>
-<div>Times I stopped loving you: 0</div>
-<div>Universe stability: 100%</div>
-<div>Heart ownership: Ammu ❤️</div>
-
+<div id="emotionalStatus">
+Thoughts about Ammu today: <span id="thoughtCount">0</span>
 </div>
 
 <button onclick="openMemory()">Enter Memory Lane 💕</button>
-
-<br><br>
 
 <button onclick="generateLove()">Why I love you 💕</button>
 
 <div id="loveLetter"></div>
 
-<br>
-
 <button onclick="openLetter()">Read this when you miss me 💌</button>
+
+<!-- SCOREBOARD CORRECT PLACE -->
+
+<div id="scoreboard">
+
+<h2>🏏 LOVE MATCH SCOREBOARD 🏏</h2>
+
+<div class="scoreRow">
+<span>Batsman</span>
+<span>AMAN — NOT OUT ❤️</span>
+</div>
+
+<div class="scoreRow">
+<span>Runs</span>
+<span id="loveRuns">0</span>
+</div>
+
+<div class="scoreRow">
+<span>Balls</span>
+<span id="loveBalls">0</span>
+</div>
+
+<div class="scoreResult">
+Aman won Jahnavi’s heart ❤️
+</div>
+
+</div>
 
 </div>
 
 <div id="letterScreen">
 <h1>For you ❤️</h1>
 <div id="letterText"></div>
-<button onclick="closeLetter()">Back to universe 💕</button>
+<button onclick="closeLetter()">Back</button>
 </div>
 
 <div id="memory">
 <h1>Our Memory Lane 💕</h1>
 <div class="timeline" id="timeline"></div>
-<button onclick="goBack()">Back 💗</button>
+<button onclick="goBack()">Back</button>
 </div>
 
 <script>
 
-/* STARS */
-function createStars(){
-const starsContainer=document.getElementById("stars");
-for(let i=0;i<120;i++){
-let star=document.createElement("div");
-star.className="star";
-star.style.top=Math.random()*100+"%";
-star.style.left=Math.random()*100+"%";
-starsContainer.appendChild(star);
-}
-}
-createStars();
+/* ENTER FIXED */
 
-/* HEART TOUCH RESPONSE */
-var heart=document.getElementById("heartbeatHeart");
-
-document.addEventListener("mousedown",()=>heart.style.animationDuration="0.4s");
-document.addEventListener("mouseup",()=>heart.style.animationDuration="1.5s");
-document.addEventListener("touchstart",()=>heart.style.animationDuration="0.4s");
-document.addEventListener("touchend",()=>heart.style.animationDuration="1.5s");
-
-/* TIMER */
-var startDate=new Date("December 1, 2024 00:00:00");
-
-function updateTime(){
-var now=new Date();
-var diff=now-startDate;
-
-var days=Math.floor(diff/(1000*60*60*24));
-var hours=Math.floor((diff/(1000*60*60))%24);
-var minutes=Math.floor((diff/(1000*60))%60);
-var seconds=Math.floor((diff/1000)%60);
-
-document.getElementById("time").innerText=
-"Time since I fell for you: "+days+" days "+hours+" hrs "+minutes+" mins "+seconds+" secs 💕";
-}
-setInterval(updateTime,1000);
-updateTime();
-
-/* PASSWORD */
 function enterUniverse(){
 var pass=document.getElementById("password").value;
+
 if(pass==="jahnman"){
 document.getElementById("login").style.display="none";
 document.getElementById("main").style.display="block";
 document.getElementById("fill").style.width="100%";
 document.getElementById("bgMusic").play();
-}else alert("Wrong password 💔");
+}
+else{
+alert("Wrong password 💔");
+}
 }
 
-/* EMOTIONAL STATUS */
-var thoughtCount=0;
-function increaseThoughts(){
-thoughtCount++;
-document.getElementById("thoughtCount").innerText=thoughtCount;
-}
-setInterval(increaseThoughts,3000);
-increaseThoughts();
+/* SCOREBOARD LIVE */
 
-/* LOVE MESSAGE */
-function generateLove(){
-var msgs=["You make my universe exist 💕","You are my safest place","I love your hugs"];
-typeLetter(msgs[Math.floor(Math.random()*msgs.length)]);
-}
+var runs=0;
+var balls=0;
 
-function typeLetter(text){
-var element=document.getElementById("loveLetter");
-element.innerHTML="";
-let i=0;
-let interval=setInterval(()=>{
-if(i<text.length){element.innerHTML+=text[i];i++;}
-else clearInterval(interval);
-},40);
-}
+setInterval(function(){
 
-/* FIXED LETTER FUNCTIONS */
-var letterMessage=`Hi my love,
+balls++;
+runs+=Math.floor(Math.random()*2);
 
-You changed my universe forever.
+document.getElementById("loveRuns").innerText=runs;
+document.getElementById("loveBalls").innerText=balls;
 
-I love you.
-Always.`;
+},2000);
+
+/* TIMER */
+
+var startDate=new Date("December 1, 2024");
+
+setInterval(function(){
+
+var now=new Date();
+var diff=now-startDate;
+
+var days=Math.floor(diff/(1000*60*60*24));
+
+document.getElementById("time").innerText=
+"Time since I fell for you: "+days+" days ❤️";
+
+},1000);
+
+/* LETTER */
 
 function openLetter(){
 document.getElementById("main").style.display="none";
 document.getElementById("letterScreen").style.display="block";
-typeLetterSlow(letterMessage);
+
+document.getElementById("letterText").innerText=
+"I will choose you in every universe ❤️";
 }
 
 function closeLetter(){
@@ -387,17 +378,8 @@ document.getElementById("letterScreen").style.display="none";
 document.getElementById("main").style.display="block";
 }
 
-function typeLetterSlow(text){
-var element=document.getElementById("letterText");
-element.innerHTML="";
-let i=0;
-let interval=setInterval(()=>{
-if(i<text.length){element.innerHTML+=text[i];i++;}
-else clearInterval(interval);
-},35);
-}
+/* MEMORY */
 
-/* FIXED MEMORY FUNCTIONS */
 function openMemory(){
 document.getElementById("main").style.display="none";
 document.getElementById("memory").style.display="block";
@@ -410,14 +392,23 @@ document.getElementById("main").style.display="block";
 }
 
 function loadMemories(){
+
 var timeline=document.getElementById("timeline");
 timeline.innerHTML="";
+
 for(let i=1;i<=32;i++){
+
 var card=document.createElement("div");
 card.className="memoryCard";
-card.innerHTML=`<img src="images/memory_${i}.jpeg"><div class="caption">Memory ${i}</div>`;
+
+card.innerHTML=
+`<img src="images/memory_${i}.jpeg">
+<div class="caption">Memory ${i}</div>`;
+
 timeline.appendChild(card);
+
 }
+
 }
 
 </script>
