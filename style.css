@@ -1,165 +1,148 @@
-/* RESET */
-body {
-    margin: 0;
-    padding: 0;
-    background: black;
-    color: white;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
+body{
+margin:0;
+font-family:Arial;
+background:black;
+color:white;
+overflow:hidden;
 }
 
-/* STAR CANVAS */
-#stars {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    pointer-events: none;
-}
 
 /* LOCK SCREEN */
-.lock-screen {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.lock-screen{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
 }
 
-.lock-box {
-    background: rgba(255,255,255,0.08);
-    padding: 40px;
-    border-radius: 15px;
-    backdrop-filter: blur(12px);
-    text-align: center;
+.lock-box{
+background:rgba(255,182,193,0.1);
+padding:40px;
+border-radius:15px;
+text-align:center;
 }
 
-.lock-box input {
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: none;
+
+/* UNIVERSE */
+
+.universe{
+display:none;
+height:100vh;
+justify-content:center;
+align-items:center;
+flex-direction:column;
 }
 
-.lock-box button {
-    padding: 10px 20px;
-    margin-top: 10px;
-    border: none;
-    background: #ff4da6;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
+
+/* BUTTON */
+
+.btn{
+padding:12px 20px;
+border:none;
+border-radius:10px;
+background:#ff4da6;
+color:white;
+cursor:pointer;
+margin-top:15px;
 }
 
-.lock-box button:hover {
-    background: #ff1a8c;
+
+/* MEMORY LANE FIX */
+
+.memory-lane{
+
+display:none;
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100vw;
+height:100vh;
+
+background:black;
+
+overflow-y:auto;
+
+z-index:9999;
+
+padding-top:40px;
+
 }
 
-/* MAIN UNIVERSE */
-.universe {
-    display: none;
-    height: 100vh;
-    position: relative;
-    text-align: center;
-    padding-top: 40px;
+
+/* TIMELINE */
+
+.timeline{
+
+position:relative;
+
+width:90%;
+max-width:900px;
+
+margin:auto;
+
 }
 
-/* WELCOME TEXT */
-.welcome-text {
-    font-size: 32px;
-    margin-bottom: 20px;
+
+#timeline-line{
+
+position:absolute;
+
+left:50%;
+
+top:0;
+
+width:4px;
+
+height:100%;
+
+background:#ff66b2;
+
+transform:translateX(-50%);
+
 }
 
-/* PROGRESS BAR */
-.progress-container {
-    width: 80%;
-    height: 20px;
-    margin: auto;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
+
+/* MEMORY CARD */
+
+.memory-card{
+
+position:relative;
+
+width:40%;
+
+margin:40px 0;
+
+padding:10px;
+
+background:rgba(255,182,193,0.1);
+
+border-radius:15px;
+
 }
 
-#progress-bar {
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, #ff4da6, #ff99cc);
-    border-radius: 10px;
-    transition: width 0.5s;
+
+.memory-card img{
+
+width:100%;
+
+border-radius:10px;
+
 }
 
-#progress-text {
-    margin-top: 10px;
+
+/* LEFT */
+
+.left{
+left:0;
 }
 
-/* COUNTER */
-.counter {
-    margin-top: 20px;
-}
 
-/* REASON BUTTON */
-.reason-btn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: #ff4da6;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
+/* RIGHT */
 
-.reason-btn:hover {
-    background: #ff1a8c;
-}
-
-/* HEARTS */
-#heart-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.heart {
-    position: absolute;
-    font-size: 24px;
-    cursor: pointer;
-    animation: floatUp linear forwards;
-}
-
-@keyframes floatUp {
-    from {
-        transform: translateY(100vh);
-    }
-    to {
-        transform: translateY(-10vh);
-    }
-}
-
-/* POPUPS */
-.hidden {
-    display: none;
-}
-
-#message-popup,
-#final-letter {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.message-box {
-    background: rgba(255,255,255,0.1);
-    padding: 30px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    text-align: center;
-    max-width: 300px;
+.right{
+left:60%;
 }
