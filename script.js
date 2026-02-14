@@ -77,7 +77,7 @@ draw();
 
 }
 
-// PROGRESS
+// LOVE PROGRESS
 
 let progress=0;
 
@@ -92,9 +92,15 @@ document.getElementById("progress-bar").style.width=progress+"%";
 document.getElementById("progress-text").innerText=
 "Love Energy: "+progress+"%";
 
-if(progress>=100){
+/* FINAL LETTER ONLY AT 100 */
+
+if(progress===100){
+
+setTimeout(()=>{
 
 document.getElementById("final-letter").style.display="flex";
+
+},500);
 
 }
 
@@ -104,17 +110,19 @@ document.getElementById("final-letter").style.display="flex";
 
 const messages=[
 
-"You are my home 💕",
+"You are my forever 💕",
 "You are my safe place 💗",
 "I love you endlessly 💖",
-"You make my life beautiful 💞",
-"I choose you forever 💘"
+"You complete me 💞",
+"I choose you always 💘"
 
 ];
 
 function createHeart(){
 
 const container=document.getElementById("heart-container");
+
+if(!container)return;
 
 const heart=document.createElement("div");
 
@@ -131,7 +139,6 @@ heart.style.animationDuration=duration+"s";
 heart.onclick=function(){
 
 showMessage();
-
 increaseProgress(10);
 
 heart.remove();
@@ -146,7 +153,7 @@ setTimeout(()=>heart.remove(),duration*1000);
 
 setInterval(createHeart,1500);
 
-// MESSAGE
+// MESSAGE POPUP
 
 function showMessage(){
 
@@ -185,15 +192,15 @@ days+" days";
 
 }
 
-// REASONS
+// REASON GENERATOR
 
 const reasons=[
 
-"You make me smile 💕",
-"You understand me 💗",
-"You are my happiness 💖",
-"You are my person 💞",
-"You are my forever 💘"
+"You make me happy 💕",
+"You are my home 💗",
+"You are my universe 💖",
+"You are my forever 💞",
+"You are my heart 💘"
 
 ];
 
