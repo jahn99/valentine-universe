@@ -1,104 +1,94 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
-<title>My Universe is You 💗</title>
-<link rel="stylesheet" href="style.css">
+<title>My Universe</title>
+
+<style>
+
+body {
+margin:0;
+font-family:Arial;
+background:black;
+color:white;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.card{
+background:#111;
+padding:40px;
+border-radius:20px;
+text-align:center;
+}
+
+button{
+padding:10px 20px;
+margin-top:15px;
+background:#ff4da6;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+</style>
+
 </head>
+
 
 <body>
 
-<canvas id="stars"></canvas>
+<div id="login" class="card">
 
-<!-- LOCK SCREEN -->
-<div class="lock-screen" id="lockScreen">
-  <div class="lock-box">
-    <h1>💗 This universe was created for you</h1>
-    <p>Enter the secret password</p>
-    <input type="password" id="passwordInput">
-    <br>
-    <button onclick="checkPassword()">Enter</button>
-    <p id="errorMessage"></p>
-  </div>
-</div>
+<h2>This universe was created for you 💗</h2>
 
-<!-- MAIN UNIVERSE -->
-<div class="universe" id="universe">
+<input type="password" id="password">
 
-<h1 class="title">
-Hi love. Loving you changed my universe 💕
-</h1>
+<br>
 
-<div class="progress-container">
-<div id="progress-bar"></div>
-</div>
+<button onclick="login()">Enter</button>
 
-<p id="progress-text">Love Energy: 0%</p>
-
-<p>Time since I fell for you 💗</p>
-<p id="time-counter"></p>
-
-<button class="reason-btn" onclick="generateReason()">
-Generate reason 💌
-</button>
-<button class="reason-btn" onclick="openMemoryLane()">
-Enter Memory Lane 💞
-</button>
-
-
-<p id="reason-output"></p>
-
-<button class="reason-btn" onclick="openMemoryLane()">
-Enter Memory Lane 💞
-</button>
-
-<div id="heart-container"></div>
-
-</div>
-
-<!-- MEMORY LANE -->
-<div id="memory-lane" style="display:none;">
-<h1 class="title">Our Memory Lane 💕</h1>
-<div id="memory-container"></div>
-<button class="reason-btn" onclick="closeMemoryLane()">Return 💗</button>
-</div>
-
-<!-- MESSAGE POPUP -->
-<div id="message-popup" style="display:none;">
-<div class="message-box">
-<p id="love-message"></p>
-<button onclick="closeMessage()">Close 💖</button>
-</div>
-</div>
-
-<!-- FINAL LETTER -->
-<div id="final-letter" style="display:none;">
-<div class="message-box">
-<h2>💖 Final Message 💖</h2>
-<p>
-In every lifetime.<br>
-In every universe.<br>
-I would find you.<br><br>
-And I would choose you again.<br><br>
-You are my forever. 💕
-</p>
-</div>
-</div>
-<!-- MEMORY LANE -->
-<div id="memory-lane" style="display:none;">
-
-<h1 class="title">Our Memory Lane 💕</h1>
-
-<div id="memory-container"></div>
-
-<button class="reason-btn" onclick="closeMemoryLane()">
-Return to Universe 💗
-</button>
+<p id="msg"></p>
 
 </div>
 
 
-<script src="script.js"></script>
+<div id="main" class="card" style="display:none;">
+
+<h2>Hi love. Loving you changed my universe 💕</h2>
+
+</div>
+
+
+<script>
+
+function login(){
+
+var pass =
+document.getElementById("password").value;
+
+if(pass==="iloveyou"){
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("main").style.display="block";
+
+}
+else{
+
+document.getElementById("msg").innerText="Wrong password";
+
+}
+
+}
+
+</script>
+
 
 </body>
+
 </html>
