@@ -162,14 +162,39 @@ pointer-events:none;
 }
 
 @keyframes floatUp{
-from{
-transform:translateY(0);
-opacity:1;
+from{transform:translateY(0);opacity:1;}
+to{transform:translateY(-100px);opacity:0;}
 }
-to{
-transform:translateY(-100px);
-opacity:0;
+
+/* NEW HEARTBEAT HEART */
+
+#heartbeatHeart{
+font-size:40px;
+margin-top:20px;
+animation: heartbeat 1.5s infinite;
 }
+
+@keyframes heartbeat{
+0%{transform:scale(1);}
+50%{transform:scale(1.25);}
+100%{transform:scale(1);}
+}
+
+/* LOVE LETTER SCREEN */
+
+#letterScreen{
+display:none;
+padding:30px;
+text-align:center;
+}
+
+#letterText{
+max-width:500px;
+margin:auto;
+font-size:18px;
+line-height:1.6;
+color:#ffb3d9;
+white-space:pre-line;
 }
 
 </style>
@@ -199,7 +224,9 @@ opacity:0;
 
 <div id="main">
 
-<h1>Hi love. Loving you changed my universe 💕</h1>
+<h1>My Dear Ammu ,Loving you changed my universe 💕</h1>
+
+<div id="heartbeatHeart">❤️</div>
 
 <div class="meter">
 <div class="fill" id="fill"></div>
@@ -216,6 +243,24 @@ opacity:0;
 <button onclick="generateLove()">Why I love you 💕</button>
 
 <div id="loveLetter"></div>
+
+<br>
+
+<button onclick="openLetter()">Read this when you miss me 💌</button>
+
+</div>
+
+<!-- LOVE LETTER SCREEN -->
+
+<div id="letterScreen">
+
+<h1>For you ❤️</h1>
+
+<div id="letterText"></div>
+
+<br>
+
+<button onclick="closeLetter()">Back to universe 💕</button>
 
 </div>
 
@@ -236,25 +281,16 @@ opacity:0;
 /* CREATE STARS */
 
 function createStars(){
-
 const starsContainer=document.getElementById("stars");
-
 for(let i=0;i<120;i++){
-
 let star=document.createElement("div");
-
 star.className="star";
-
 star.style.top=Math.random()*100+"%";
 star.style.left=Math.random()*100+"%";
 star.style.animationDuration=(1+Math.random()*3)+"s";
-
 starsContainer.appendChild(star);
-
 }
-
 }
-
 createStars();
 
 
@@ -265,7 +301,6 @@ var startDate=new Date("December 1, 2024 00:00:00");
 function updateTime(){
 
 var now=new Date();
-
 var diff=now-startDate;
 
 var days=Math.floor(diff/(1000*60*60*24));
@@ -286,6 +321,17 @@ setInterval(updateTime,1000);
 updateTime();
 
 
+/* UNIVERSE GROWS MESSAGE */
+
+setTimeout(function(){
+
+var days=Math.floor((new Date()-startDate)/(1000*60*60*24));
+
+typeLetter("Our universe has been growing for "+days+" days ❤️");
+
+},4000);
+
+
 /* LOVE MESSAGE */
 
 var loveMessages=[
@@ -302,19 +348,14 @@ var loveMessages=[
 ];
 
 function generateLove(){
-
 var message=loveMessages[Math.floor(Math.random()*loveMessages.length)];
-
 typeLetter(message);
-
 }
 
 function typeLetter(text){
 
 var element=document.getElementById("loveLetter");
-
 element.innerHTML="";
-
 let i=0;
 
 let interval=setInterval(function(){
@@ -331,16 +372,69 @@ clearInterval(interval);
 }
 
 
+/* LOVE LETTER FEATURE */
+
+var letterMessage=`Hi my love,
+
+I don't think you truly understand how much you mean to me.
+
+You came into my life so quietly, but somehow you became my safest place, my happiness, my home.
+
+Every memory with you lives inside me.
+
+Every laugh, every hug, every moment.
+
+You changed my universe without even trying.
+
+And if I had to live my life all over again,
+I would still choose you.
+
+In every lifetime.
+In every universe.
+
+I love you.
+
+Always.
+`;
+
+function openLetter(){
+document.getElementById("main").style.display="none";
+document.getElementById("letterScreen").style.display="block";
+typeLetterSlow(letterMessage);
+}
+
+function closeLetter(){
+document.getElementById("letterScreen").style.display="none";
+document.getElementById("main").style.display="block";
+}
+
+function typeLetterSlow(text){
+
+var element=document.getElementById("letterText");
+element.innerHTML="";
+let i=0;
+
+let interval=setInterval(function(){
+
+if(i<text.length){
+element.innerHTML+=text[i];
+i++;
+}else{
+clearInterval(interval);
+}
+
+},35);
+
+}
+
+
 /* HEART PARTICLES */
 
 document.addEventListener("click",function(e){
 
 let heart=document.createElement("div");
-
 heart.className="heart";
-
 heart.innerHTML="💗";
-
 heart.style.left=e.clientX+"px";
 heart.style.top=e.clientY+"px";
 
@@ -375,32 +469,25 @@ alert("Wrong password 💔");
 }
 
 
-/* MEMORY */
+/* MEMORY FUNCTIONS (UNCHANGED) */
 
 function openMemory(){
-
 document.getElementById("main").style.display="none";
 document.getElementById("memory").style.display="block";
-
 loadMemories();
-
 }
 
 function goBack(){
-
 document.getElementById("memory").style.display="none";
 document.getElementById("main").style.display="block";
-
 }
-
 
 function loadMemories(){
 
 var timeline=document.getElementById("timeline");
-
 timeline.innerHTML="";
 
-var captions=[
+var captions=[ /* unchanged captions */ 
 
 "Our first party💕",
 "Our first picture together",
@@ -438,18 +525,10 @@ var captions=[
 ];
 
 for(let i=1;i<=32;i++){
-
 var card=document.createElement("div");
-
 card.className="memoryCard";
-
-card.innerHTML=`
-<img src="images/memory_${i}.jpeg">
-<div class="caption">${captions[i-1]}</div>
-`;
-
+card.innerHTML=`<img src="images/memory_${i}.jpeg"><div class="caption">${captions[i-1]}</div>`;
 timeline.appendChild(card);
-
 }
 
 }
