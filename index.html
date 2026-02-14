@@ -69,7 +69,6 @@ h1{
 font-size:30px;
 }
 
-/* ADDED gravitational center styling */
 #gravityCenter{
 font-size:24px;
 margin-top:10px;
@@ -234,7 +233,6 @@ white-space:pre-line;
 
 <h1>My Dear Ammu ,Loving you changed my universe 💕</h1>
 
-<!-- ADDED gravitational center -->
 <div id="gravityCenter">JAHNMAN 🪐</div>
 
 <div id="heartbeatHeart">❤️</div>
@@ -246,6 +244,7 @@ white-space:pre-line;
 <p>Love Energy: 100%</p>
 
 <p id="time"></p>
+
 <br>
 
 <div id="emotionalStatus" style="
@@ -260,15 +259,11 @@ box-shadow:0 0 15px rgba(255,0,150,0.2);
 ">
 
 <div>Thoughts about Ammu today: <span id="thoughtCount">0</span></div>
-
 <div>Times I stopped loving you: 0</div>
-
 <div>Universe stability: 100%</div>
-
 <div>Heart ownership: Ammu ❤️</div>
 
 </div>
-
 
 <button onclick="openMemory()">Enter Memory Lane 💕</button>
 
@@ -284,8 +279,6 @@ box-shadow:0 0 15px rgba(255,0,150,0.2);
 
 </div>
 
-<!-- LETTER + MEMORY unchanged -->
-
 <div id="letterScreen">
 <h1>For you ❤️</h1>
 <div id="letterText"></div>
@@ -300,8 +293,7 @@ box-shadow:0 0 15px rgba(255,0,150,0.2);
 
 <script>
 
-/* CREATE STARS */
-
+/* STARS */
 function createStars(){
 const starsContainer=document.getElementById("stars");
 for(let i=0;i<120;i++){
@@ -309,62 +301,20 @@ let star=document.createElement("div");
 star.className="star";
 star.style.top=Math.random()*100+"%";
 star.style.left=Math.random()*100+"%";
-star.dataset.x=Math.random()*window.innerWidth;
-star.dataset.y=Math.random()*window.innerHeight;
 starsContainer.appendChild(star);
 }
 }
 createStars();
 
-
-/* FEATURE 1 — HEARTBEAT RESPONDS TO TOUCH */
-
+/* HEART TOUCH RESPONSE */
 var heart=document.getElementById("heartbeatHeart");
 
-document.addEventListener("mousedown",()=>{
-heart.style.animationDuration="0.4s";
-});
-
-document.addEventListener("mouseup",()=>{
-heart.style.animationDuration="1.5s";
-});
-
-document.addEventListener("touchstart",()=>{
-heart.style.animationDuration="0.4s";
-});
-
-document.addEventListener("touchend",()=>{
-heart.style.animationDuration="1.5s";
-});
-
-
-/* FEATURE 12 — STARS GRAVITATE TO HIS NAME */
-
-setInterval(()=>{
-
-var center=document.getElementById("gravityCenter");
-var rect=center.getBoundingClientRect();
-
-var cx=rect.left+rect.width/2;
-var cy=rect.top+rect.height/2;
-
-document.querySelectorAll(".star").forEach(star=>{
-
-var sx=star.offsetLeft;
-var sy=star.offsetTop;
-
-var dx=(cx-sx)*0.02;
-var dy=(cy-sy)*0.02;
-
-star.style.transform=`translate(${dx}px, ${dy}px)`;
-
-});
-
-},50);
-
+document.addEventListener("mousedown",()=>heart.style.animationDuration="0.4s");
+document.addEventListener("mouseup",()=>heart.style.animationDuration="1.5s");
+document.addEventListener("touchstart",()=>heart.style.animationDuration="0.4s");
+document.addEventListener("touchend",()=>heart.style.animationDuration="1.5s");
 
 /* TIMER */
-
 var startDate=new Date("December 1, 2024 00:00:00");
 
 function updateTime(){
@@ -377,35 +327,35 @@ var minutes=Math.floor((diff/(1000*60))%60);
 var seconds=Math.floor((diff/1000)%60);
 
 document.getElementById("time").innerText=
-"Time since I fell for you: "+
-days+" days "+
-hours+" hrs "+
-minutes+" mins "+
-seconds+" secs 💕";
+"Time since I fell for you: "+days+" days "+hours+" hrs "+minutes+" mins "+seconds+" secs 💕";
 }
-
 setInterval(updateTime,1000);
 updateTime();
 
+/* PASSWORD */
+function enterUniverse(){
+var pass=document.getElementById("password").value;
+if(pass==="jahnman"){
+document.getElementById("login").style.display="none";
+document.getElementById("main").style.display="block";
+document.getElementById("fill").style.width="100%";
+document.getElementById("bgMusic").play();
+}else alert("Wrong password 💔");
+}
 
-/* ALL YOUR OTHER FUNCTIONS UNCHANGED BELOW */
+/* EMOTIONAL STATUS */
+var thoughtCount=0;
+function increaseThoughts(){
+thoughtCount++;
+document.getElementById("thoughtCount").innerText=thoughtCount;
+}
+setInterval(increaseThoughts,3000);
+increaseThoughts();
 
+/* LOVE MESSAGE */
 function generateLove(){
-var loveMessages=[
-"You make my universe exist 💕",
-"You are my safest place",
-"I love your stupid jokes",
-"I love how you look at me",
-"I love annoying you",
-"I love being yours",
-"I love your voice",
-"I love your hugs",
-"I love your existence",
-"I love everything about you"
-];
-
-var message=loveMessages[Math.floor(Math.random()*loveMessages.length)];
-typeLetter(message);
+var msgs=["You make my universe exist 💕","You are my safest place","I love your hugs"];
+typeLetter(msgs[Math.floor(Math.random()*msgs.length)]);
 }
 
 function typeLetter(text){
@@ -418,37 +368,57 @@ else clearInterval(interval);
 },40);
 }
 
-/* PASSWORD */
+/* FIXED LETTER FUNCTIONS */
+var letterMessage=`Hi my love,
 
-function enterUniverse(){
-var pass=document.getElementById("password").value;
-if(pass==="jahnman"){
-document.getElementById("login").style.display="none";
+You changed my universe forever.
+
+I love you.
+Always.`;
+
+function openLetter(){
+document.getElementById("main").style.display="none";
+document.getElementById("letterScreen").style.display="block";
+typeLetterSlow(letterMessage);
+}
+
+function closeLetter(){
+document.getElementById("letterScreen").style.display="none";
 document.getElementById("main").style.display="block";
-document.getElementById("fill").style.width="100%";
-document.getElementById("bgMusic").play();
-}else alert("Wrong password 💔");
-}
-/* PERSONAL EMOTIONAL STATUS SYSTEM */
-
-var thoughtCount = 0;
-
-function increaseThoughts(){
-
-// increases slowly forever
-thoughtCount += 1;
-
-
-document.getElementById("thoughtCount").innerText = thoughtCount;
-
 }
 
-// increase every 3 seconds
-setInterval(increaseThoughts, 3000);
+function typeLetterSlow(text){
+var element=document.getElementById("letterText");
+element.innerHTML="";
+let i=0;
+let interval=setInterval(()=>{
+if(i<text.length){element.innerHTML+=text[i];i++;}
+else clearInterval(interval);
+},35);
+}
 
-// initialize
-increaseThoughts();
+/* FIXED MEMORY FUNCTIONS */
+function openMemory(){
+document.getElementById("main").style.display="none";
+document.getElementById("memory").style.display="block";
+loadMemories();
+}
 
+function goBack(){
+document.getElementById("memory").style.display="none";
+document.getElementById("main").style.display="block";
+}
+
+function loadMemories(){
+var timeline=document.getElementById("timeline");
+timeline.innerHTML="";
+for(let i=1;i<=32;i++){
+var card=document.createElement("div");
+card.className="memoryCard";
+card.innerHTML=`<img src="images/memory_${i}.jpeg"><div class="caption">Memory ${i}</div>`;
+timeline.appendChild(card);
+}
+}
 
 </script>
 
