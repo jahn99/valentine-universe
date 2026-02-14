@@ -3,48 +3,116 @@
 
 <head>
 <meta charset="UTF-8">
-<title>My Universe</title>
+<title>Our Universe 💗</title>
 
 <style>
 
-body {
+body{
 margin:0;
 font-family:Arial;
 background:black;
 color:white;
+overflow-x:hidden;
+}
+
+/* LOGIN */
+
+#login{
+height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
 }
 
 .card{
-background:#111;
+background:#14080f;
 padding:40px;
 border-radius:20px;
 text-align:center;
+box-shadow:0 0 40px rgba(255,0,120,0.4);
+}
+
+input{
+padding:10px;
+border-radius:10px;
+border:none;
+margin-top:10px;
 }
 
 button{
-padding:10px 20px;
+padding:12px 25px;
 margin-top:15px;
 background:#ff4da6;
 color:white;
 border:none;
-border-radius:10px;
+border-radius:12px;
+font-size:16px;
 cursor:pointer;
+}
+
+button:hover{
+background:#ff1a8c;
+}
+
+/* MAIN */
+
+#main{
+display:none;
+text-align:center;
+padding-top:100px;
+}
+
+h1{
+font-size:40px;
+}
+
+.meter{
+width:60%;
+height:20px;
+background:#333;
+margin:auto;
+border-radius:10px;
+overflow:hidden;
+margin-top:20px;
+}
+
+.fill{
+height:100%;
+width:0%;
+background:#ff4da6;
+}
+
+.memoryBtn{
+margin-top:30px;
+}
+
+/* MEMORY LANE */
+
+#memory{
+display:none;
+padding:50px;
+}
+
+img{
+width:300px;
+border-radius:15px;
+margin:20px;
 }
 
 </style>
 
 </head>
 
-
 <body>
 
-<div id="login" class="card">
 
-<h2>This universe was created for you 💗</h2>
+<!-- LOGIN -->
+
+<div id="login">
+
+<div class="card">
+
+<h2>💗 This universe was created for you</h2>
 
 <input type="password" id="password">
 
@@ -56,15 +124,55 @@ cursor:pointer;
 
 </div>
 
+</div>
 
-<div id="main" class="card" style="display:none;">
 
-<h2>Hi love. Loving you changed my universe 💕</h2>
+
+<!-- MAIN -->
+
+<div id="main">
+
+<h1>Hi love. Loving you changed my universe 💕</h1>
+
+<div class="meter">
+
+<div class="fill" id="loveFill"></div>
+
+</div>
+
+<p id="loveText">Love Energy: 0%</p>
+
+<p id="timeText"></p>
+
+<button class="memoryBtn" onclick="openMemory()">
+Enter Memory Lane 💗
+</button>
 
 </div>
 
 
+
+<!-- MEMORY -->
+
+<div id="memory">
+
+<h1>Our Memory Lane 💕</h1>
+
+<img src="images/memory_1.jpeg">
+<img src="images/memory_2.jpeg">
+<img src="images/memory_3.jpeg">
+
+<br><br>
+
+<button onclick="goBack()">Back</button>
+
+</div>
+
+
+
 <script>
+
+/* LOGIN */
 
 function login(){
 
@@ -77,12 +185,75 @@ document.getElementById("login").style.display="none";
 
 document.getElementById("main").style.display="block";
 
+startLove();
+
 }
 else{
 
 document.getElementById("msg").innerText="Wrong password";
 
 }
+
+}
+
+
+/* LOVE METER */
+
+function startLove(){
+
+var percent=0;
+
+setInterval(function(){
+
+if(percent<100){
+
+percent++;
+
+document.getElementById("loveFill").style.width=percent+"%";
+
+document.getElementById("loveText").innerText=
+"Love Energy: "+percent+"%";
+
+}
+
+},50);
+
+
+/* TIME COUNTER */
+
+var start=new Date("2024-01-01");
+
+setInterval(function(){
+
+var now=new Date();
+
+var diff=now-start;
+
+var days=Math.floor(diff/(1000*60*60*24));
+
+document.getElementById("timeText").innerText=
+"Time since I fell for you: "+days+" days 💗";
+
+},1000);
+
+}
+
+
+/* MEMORY */
+
+function openMemory(){
+
+document.getElementById("main").style.display="none";
+
+document.getElementById("memory").style.display="block";
+
+}
+
+function goBack(){
+
+document.getElementById("memory").style.display="none";
+
+document.getElementById("main").style.display="block";
 
 }
 
