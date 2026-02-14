@@ -9,102 +9,111 @@
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(180deg,#0a0008,#1a0014,#330022);
+background:black;
 color:white;
 overflow-x:hidden;
 }
 
-/* CENTER SCREEN */
+/* center container */
 
-.screen{
-height:100vh;
+.center{
 display:flex;
+flex-direction:column;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-}
-
-/* CARD */
-
-.card{
-background:rgba(255,105,180,0.1);
-padding:40px;
-border-radius:20px;
-box-shadow:0 0 40px rgba(255,105,180,0.4);
+height:100vh;
 text-align:center;
 }
 
-/* INPUT */
+/* romantic card */
+
+.card{
+background:linear-gradient(145deg,#1a001a,#33001a);
+padding:40px;
+border-radius:20px;
+box-shadow:0 0 40px rgba(255,0,150,0.5);
+width:90%;
+max-width:400px;
+}
+
+/* input */
 
 input{
 padding:10px;
 border-radius:10px;
 border:none;
-margin-top:15px;
+margin-top:10px;
+width:80%;
 }
 
-/* BUTTON */
+/* buttons */
 
 button{
+margin-top:15px;
 padding:12px 25px;
-margin-top:20px;
 border:none;
-border-radius:12px;
+border-radius:20px;
 background:#ff4da6;
 color:white;
 font-size:16px;
 cursor:pointer;
 }
 
-/* MAIN */
+button:hover{
+background:#ff1a8c;
+}
+
+/* main universe */
 
 #main{
 display:none;
+padding:20px;
 text-align:center;
-padding-top:100px;
 }
 
-/* LOVE METER */
+h1{
+font-size:30px;
+}
+
+/* love meter */
 
 .meter{
-width:60%;
+width:90%;
+max-width:400px;
 height:20px;
-background:#333;
-margin:auto;
-border-radius:10px;
-overflow:hidden;
-margin-top:20px;
+background:#222;
+border-radius:20px;
+margin:20px auto;
 }
 
 .fill{
 height:100%;
 width:0%;
 background:#ff4da6;
+border-radius:20px;
+transition:2s;
 }
 
-/* MEMORY UNIVERSE */
+/* memory lane */
 
 #memory{
 display:none;
-position:relative;
-height:2000px;
+padding:20px;
 }
 
-#universe{
-position:relative;
-width:100%;
-height:2000px;
+.timeline{
+max-width:800px;
+margin:auto;
 }
 
 .memoryCard{
-position:absolute;
-width:220px;
 background:#111;
 padding:10px;
 border-radius:15px;
-box-shadow:0 0 20px rgba(255,0,150,0.6);
-text-align:center;
-animation:float 6s ease-in-out infinite;
+margin:20px auto;
+box-shadow:0 0 20px rgba(255,0,150,0.5);
+width:90%;
+max-width:400px;
 }
 
 .memoryCard img{
@@ -114,32 +123,26 @@ border-radius:10px;
 
 .caption{
 margin-top:8px;
-font-size:14px;
 color:#ffb3d9;
-}
-
-@keyframes float{
-0%{transform:translateY(0px);}
-50%{transform:translateY(-15px);}
-100%{transform:translateY(0px);}
+text-align:center;
 }
 
 </style>
 
 </head>
-
 <body>
 
+<!-- PASSWORD SCREEN -->
 
-<!-- LOGIN SCREEN -->
-
-<div id="login" class="screen">
+<div id="login" class="center">
 
 <div class="card">
 
 <h2>💗 This universe was created for you</h2>
 
-<input type="password" id="passwordInput" placeholder="Enter password">
+<p>Enter the secret password</p>
+
+<input type="password" id="password">
 
 <br>
 
@@ -157,29 +160,27 @@ color:#ffb3d9;
 <h1>Hi love. Loving you changed my universe 💕</h1>
 
 <div class="meter">
-<div class="fill" id="loveFill"></div>
+<div class="fill" id="fill"></div>
 </div>
 
-<p id="loveText">Love Energy: 0%</p>
+<p>Love Energy: 100%</p>
 
-<button onclick="openMemory()">Enter Memory Universe 💫</button>
+<p id="time"></p>
+
+<button onclick="openMemory()">Enter Memory Lane 💕</button>
 
 </div>
 
 
-<!-- MEMORY UNIVERSE -->
+<!-- MEMORY LANE -->
 
 <div id="memory">
 
-<h1 style="text-align:center;">Our Memory Universe 💕</h1>
+<h1>Our Memory Lane 💕</h1>
 
-<div id="universe"></div>
+<div class="timeline" id="timeline"></div>
 
-<br><br>
-
-<div style="text-align:center;">
-<button onclick="goBack()">Return 💗</button>
-</div>
+<button onclick="goBack()">Back 💗</button>
 
 </div>
 
@@ -188,19 +189,18 @@ color:#ffb3d9;
 
 /* PASSWORD */
 
-var correctPassword = "jahnman";
-
 function enterUniverse(){
 
-var input =
-document.getElementById("passwordInput").value;
+var pass =
+document.getElementById("password").value;
 
-if(input === correctPassword){
+if(pass==="jahnman"){
 
-document.getElementById("login").style.display = "none";
-document.getElementById("main").style.display = "block";
+document.getElementById("login").style.display="none";
 
-startLoveMeter();
+document.getElementById("main").style.display="block";
+
+document.getElementById("fill").style.width="100%";
 
 }
 else{
@@ -212,44 +212,41 @@ alert("Wrong password 💔");
 }
 
 
-/* LOVE METER */
+/* TIME COUNTER */
 
-function startLoveMeter(){
+var startDate =
+new Date("2023-12-01");
 
-var percent = 0;
+function updateTime(){
 
-var interval = setInterval(function(){
+var now =
+new Date();
 
-if(percent >= 100){
+var diff =
+now-startDate;
 
-clearInterval(interval);
+var days =
+Math.floor(diff/(1000*60*60*24));
 
-}
-else{
-
-percent++;
-
-document.getElementById("loveFill").style.width =
-percent + "%";
-
-document.getElementById("loveText").innerText =
-"Love Energy: " + percent + "%";
+document.getElementById("time").innerText =
+"Time since I fell for you: "
++days+
+" days 💕";
 
 }
 
-},50);
-
-}
+updateTime();
 
 
 /* OPEN MEMORY */
 
 function openMemory(){
 
-document.getElementById("main").style.display = "none";
-document.getElementById("memory").style.display = "block";
+document.getElementById("main").style.display="none";
 
-createUniverse();
+document.getElementById("memory").style.display="block";
+
+loadMemories();
 
 }
 
@@ -258,46 +255,44 @@ createUniverse();
 
 function goBack(){
 
-document.getElementById("memory").style.display = "none";
-document.getElementById("main").style.display = "block";
+document.getElementById("memory").style.display="none";
+
+document.getElementById("main").style.display="block";
 
 }
 
 
-/* CREATE MEMORY UNIVERSE */
+/* LOAD ALL 32 IMAGES */
 
-function createUniverse(){
+function loadMemories(){
 
-var universe =
-document.getElementById("universe");
+var timeline =
+document.getElementById("timeline");
 
-universe.innerHTML = "";
+timeline.innerHTML="";
 
 for(let i=1;i<=32;i++){
 
 var card =
 document.createElement("div");
 
-card.className = "memoryCard";
+card.className="memoryCard";
 
-card.style.top =
-Math.random()*1800 + "px";
+card.innerHTML=
+`
+<img src="images/memory_${i}.jpeg">
+<div class="caption">
+Memory ${i} 💕
+</div>
+`;
 
-card.style.left =
-Math.random()*80 + "%";
-
-card.innerHTML =
-"<img src='images/memory_"+i+".jpeg'>" +
-"<div class='caption'>Memory "+i+" 💕</div>";
-
-universe.appendChild(card);
+timeline.appendChild(card);
 
 }
 
 }
 
 </script>
-
 
 </body>
 </html>
