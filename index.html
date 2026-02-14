@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>A Universe For You</title>
@@ -8,6 +9,10 @@
 
 <body>
 
+<!-- STAR BACKGROUND -->
+<canvas id="stars"></canvas>
+
+<!-- LOCK SCREEN -->
 <div class="lock-screen" id="lockScreen">
 
     <div class="lock-box">
@@ -16,7 +21,9 @@
 
         <p>Enter password to continue</p>
 
-        <input type="password" id="passwordInput" placeholder="Enter password">
+        <input type="password" id="passwordInput">
+
+        <br>
 
         <button onclick="checkPassword()">Enter</button>
 
@@ -26,15 +33,68 @@
 
 </div>
 
-
+<!-- MAIN UNIVERSE -->
 <div class="universe" id="universe">
 
     <h1 class="welcome-text">
         Hi. I built this because loving you changed my universe.
     </h1>
 
+    <!-- PROGRESS -->
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+
+    <p id="progress-text">Love Energy: 0%</p>
+
+    <!-- COUNTER -->
+    <div class="counter">
+        <p>Time since I fell for you:</p>
+        <p id="time-counter"></p>
+    </div>
+
+    <!-- REASON -->
+    <button class="reason-btn" onclick="generateReason()">
+        Generate reason why I love you
+    </button>
+
+    <p id="reason-output"></p>
+
+    <!-- HEART CONTAINER -->
+    <div id="heart-container"></div>
+
 </div>
 
+<!-- MESSAGE POPUP -->
+<div id="message-popup" class="hidden">
+
+    <div class="message-box">
+
+        <p id="love-message"></p>
+
+        <button onclick="closeMessage()">Close</button>
+
+    </div>
+
+</div>
+
+<!-- FINAL LETTER -->
+<div id="final-letter" class="hidden">
+
+    <div class="message-box">
+
+        <h2>Final Message</h2>
+
+        <p>
+            In every lifetime.<br>
+            In every universe.<br>
+            I would find you.<br>
+            And I would choose you again.
+        </p>
+
+    </div>
+
+</div>
 
 <script src="script.js"></script>
 
