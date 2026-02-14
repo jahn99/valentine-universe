@@ -1,215 +1,291 @@
-window.onload=function(){
+// ==========================
+// GLOBAL VARIABLES
+// ==========================
 
-startStars();
-startCounter();
+let progress = 0;
 
+// change this date to your actual anniversary if you want
+const startDate = new Date("2024-01-01");
+
+
+// ==========================
+// RUN AFTER PAGE LOAD
+// ==========================
+
+window.onload = function () {
+
+    // ensure final letter is hidden at start
+    const finalLetter = document.getElementById("final-letter");
+    if (finalLetter) {
+        finalLetter.style.display = "none";
+    }
+
+    startStars();
+    startCounter();
 };
 
-// PASSWORD
 
-function checkPassword(){
+// ==========================
+// PASSWORD SYSTEM
+// ==========================
 
-let password=document.getElementById("passwordInput").value;
+function checkPassword() {
 
-if(password==="iloveyou"){
+    const password = document.getElementById("passwordInput").value;
 
-document.getElementById("lockScreen").style.display="none";
-document.getElementById("universe").style.display="block";
+    if (password === "iloveyou") {
 
-}
-else{
+        document.getElementById("lockScreen").style.display = "none";
+        document.getElementById("universe").style.display = "block";
 
-document.getElementById("errorMessage").innerText="Wrong password";
+    }
+    else {
 
-}
+        document.getElementById("errorMessage").innerText =
+            "Wrong password";
 
-}
-
-// STARS
-
-function startStars(){
-
-const canvas=document.getElementById("stars");
-const ctx=canvas.getContext("2d");
-
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let stars=[];
-
-for(let i=0;i<200;i++){
-
-stars.push({
-
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*1.5,
-s:Math.random()*0.5
-
-});
-
+    }
 }
 
-function draw(){
 
-ctx.clearRect(0,0,canvas.width,canvas.height);
+// ==========================
+// STAR BACKGROUND
+// ==========================
 
-ctx.fillStyle="#ff99cc";
+function startStars() {
 
-stars.forEach(star=>{
+    const canvas = document.getElementById("stars");
 
-ctx.beginPath();
-ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
-ctx.fill();
+    if (!canvas) return;
 
-star.y+=star.s;
+    const ctx = canvas.getContext("2d");
 
-if(star.y>canvas.height)
-star.y=0;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-});
+    let stars = [];
 
-requestAnimationFrame(draw);
+    for (let i = 0; i < 200; i++) {
 
+        stars.push({
+
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 1.5,
+            speed: Math.random() * 0.5
+
+        });
+
+    }
+
+    function drawStars() {
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#ff99cc";
+
+        stars.forEach(star => {
+
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            star.y += star.speed;
+
+            if (star.y > canvas.height) {
+                star.y = 0;
+            }
+
+        });
+
+        requestAnimationFrame(drawStars);
+
+    }
+
+    drawStars();
 }
 
-draw();
 
+// ==========================
+// LOVE PROGRESS SYSTEM
+// ==========================
+
+function increaseProgress(amount) {
+
+    progress += amount;
+
+    if (progress > 100) progress = 100;
+
+    const bar = document.getElementById("progress-bar");
+    const text = document.getElementById("progress-text");
+
+    if (bar) bar.style.width = progress + "%";
+    if (text) text.innerText = "Love Energy: " + progress + "%";
+
+    // ONLY SHOW FINAL LETTER AT EXACTLY 100%
+    if (progress === 100) {
+
+        const finalLetter =
+            document.getElementById("final-letter");
+
+        if (finalLetter) {
+
+            finalLetter.style.display = "flex";
+
+        }
+
+    }
 }
 
-// LOVE PROGRESS
 
-let progress=0;
+// ==========================
+// FLOATING HEARTS SYSTEM
+// ==========================
 
-function increaseProgress(amount){
+const messages = [
 
-progress+=amount;
-
-if(progress>100)progress=100;
-
-document.getElementById("progress-bar").style.width=progress+"%";
-
-document.getElementById("progress-text").innerText=
-"Love Energy: "+progress+"%";
-
-/* FINAL LETTER ONLY AT 100 */
-
-if(progress===100){
-
-setTimeout(()=>{
-
-document.getElementById("final-letter").style.display="flex";
-
-},500);
-
-}
-
-}
-
-// HEARTS
-
-const messages=[
-
-"You are my forever 💕",
-"You are my safe place 💗",
-"I love you endlessly 💖",
-"You complete me 💞",
-"I choose you always 💘"
+    "You are my forever 💕",
+    "You are my safe place 💗",
+    "I love you endlessly 💖",
+    "You complete my universe 💞",
+    "I choose you in every lifetime 💘",
+    "You are my home 💓"
 
 ];
 
-function createHeart(){
+function createHeart() {
 
-const container=document.getElementById("heart-container");
+    const container =
+        document.getElementById("heart-container");
 
-if(!container)return;
+    if (!container) return;
 
-const heart=document.createElement("div");
+    const heart = document.createElement("div");
 
-heart.className="heart";
+    heart.className = "heart";
 
-heart.innerHTML="💗";
+    heart.innerHTML = "💗";
 
-heart.style.left=Math.random()*100+"vw";
+    heart.style.left =
+        Math.random() * 100 + "vw";
 
-let duration=Math.random()*5+5;
+    const duration =
+        Math.random() * 5 + 5;
 
-heart.style.animationDuration=duration+"s";
+    heart.style.animationDuration =
+        duration + "s";
 
-heart.onclick=function(){
+    heart.onclick = function () {
 
-showMessage();
-increaseProgress(10);
+        showMessage();
 
-heart.remove();
+        increaseProgress(10);
 
-};
+        heart.remove();
 
-container.appendChild(heart);
+    };
 
-setTimeout(()=>heart.remove(),duration*1000);
+    container.appendChild(heart);
+
+    setTimeout(() => {
+
+        heart.remove();
+
+    }, duration * 1000);
 
 }
 
-setInterval(createHeart,1500);
+// create hearts continuously
+setInterval(createHeart, 1500);
 
+
+// ==========================
 // MESSAGE POPUP
+// ==========================
 
-function showMessage(){
+function showMessage() {
 
-let msg=messages[Math.floor(Math.random()*messages.length)];
+    const popup =
+        document.getElementById("message-popup");
 
-document.getElementById("love-message").innerText=msg;
+    const text =
+        document.getElementById("love-message");
 
-document.getElementById("message-popup").style.display="flex";
+    if (!popup || !text) return;
 
-}
+    const msg =
+        messages[Math.floor(Math.random() * messages.length)];
 
-function closeMessage(){
+    text.innerText = msg;
 
-document.getElementById("message-popup").style.display="none";
-
-}
-
-// COUNTER
-
-const startDate=new Date("2024-01-01");
-
-function startCounter(){
-
-setInterval(()=>{
-
-let now=new Date();
-
-let diff=now-startDate;
-
-let days=Math.floor(diff/(1000*60*60*24));
-
-document.getElementById("time-counter").innerText=
-days+" days";
-
-},1000);
+    popup.style.display = "flex";
 
 }
 
+function closeMessage() {
+
+    const popup =
+        document.getElementById("message-popup");
+
+    if (popup)
+        popup.style.display = "none";
+
+}
+
+
+// ==========================
+// TIME COUNTER
+// ==========================
+
+function startCounter() {
+
+    setInterval(() => {
+
+        const now = new Date();
+
+        const diff = now - startDate;
+
+        const days =
+            Math.floor(diff / (1000 * 60 * 60 * 24));
+
+        const counter =
+            document.getElementById("time-counter");
+
+        if (counter)
+            counter.innerText =
+                days + " days";
+
+    }, 1000);
+
+}
+
+
+// ==========================
 // REASON GENERATOR
+// ==========================
 
-const reasons=[
+const reasons = [
 
-"You make me happy 💕",
-"You are my home 💗",
-"You are my universe 💖",
-"You are my forever 💞",
-"You are my heart 💘"
+    "You make me smile every day 💕",
+    "You understand me 💗",
+    "You make my world brighter 💖",
+    "You are my happiness 💞",
+    "You are my forever 💘"
 
 ];
 
-function generateReason(){
+function generateReason() {
 
-let reason=reasons[Math.floor(Math.random()*reasons.length)];
+    const output =
+        document.getElementById("reason-output");
 
-document.getElementById("reason-output").innerText=reason;
+    if (!output) return;
 
-increaseProgress(5);
+    const reason =
+        reasons[Math.floor(Math.random() * reasons.length)];
+
+    output.innerText = reason;
+
+    increaseProgress(5);
 
 }
