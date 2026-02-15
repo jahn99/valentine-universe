@@ -322,18 +322,36 @@ Aman won Jahnavi’s heart ❤️
 /* ENTER FIXED */
 
 function enterUniverse(){
+
 var pass=document.getElementById("password").value;
 
 if(pass==="jahnman"){
+
 document.getElementById("login").style.display="none";
 document.getElementById("main").style.display="block";
 document.getElementById("fill").style.width="100%";
-document.getElementById("bgMusic").play();
+
+var music=document.getElementById("bgMusic");
+
+if(music){
+music.volume=0.5;
+
+music.play().catch(function(error){
+console.log("Audio play prevented:", error);
+});
+}
+
 }
 else{
 alert("Wrong password 💔");
 }
+
 }
+document.getElementById("password").addEventListener("keypress", function(e){
+if(e.key==="Enter"){
+enterUniverse();
+}
+});
 
 /* SCOREBOARD LIVE */
 
